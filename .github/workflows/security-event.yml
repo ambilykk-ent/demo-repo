@@ -1,0 +1,12 @@
+name: Security settings 
+
+on: 
+  repository_dispatch:
+      types:
+        - webhook
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Hello from Webhook
+      run: |
+        echo "Hello from Webhook"
