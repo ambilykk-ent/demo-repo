@@ -1,0 +1,26 @@
+name: Backup repository
+
+on:  
+  workflow_dispatch:
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+	
+jobs:
+  backup:
+    name: Backup repository
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Github Migrations Backup
+      uses: skrepr/github-backup-action@1.0.0
+      env:
+        GH_ORG: 'ambilykk-ent'
+        GH_REPO: 'demo-repo'
+        GH_APIKEY: ${{ secrets.GH_BACKUP }} # You can't use GITHUB_TOKEN to use the API
+        AWS_BUCKET_NAME: 'indiasestorage'
+        AWS_BUCKET_REGION: 'ap-south-1'
+        AWS_ARN: 'arn:aws:s3:::indiasestorage'
+        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }} # Github Secret is advised
+        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }} # Github Secret is advised
